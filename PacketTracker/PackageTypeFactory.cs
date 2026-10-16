@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace PacketTracker
 {
-    public enum ShippingType
+    internal class PackageTypeFactory
     {
-        Standard,
-        Fragile,
-        Express
     }
 }
