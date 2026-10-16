@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PacketTracker
 {
-    public class Fragile
+    public class Fragile: IPackageType
     {
     }
 }

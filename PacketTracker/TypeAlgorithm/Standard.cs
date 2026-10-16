@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PacketTracker.TypeAlgorithm
+namespace PacketTracker
 {
     public class Standard:IPackageType
     {
-        public void PackageType()
-        {
-            
-        }
+
     }
 }

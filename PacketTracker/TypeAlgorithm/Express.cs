@@ -8,9 +8,6 @@ namespace PacketTracker.SpeedAlgorithm
 {
     public class Express:IPackageType
     {
-        public void PackageType()
-        {
-            
-        }
+
     }
 }
