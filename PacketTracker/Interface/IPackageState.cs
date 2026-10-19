@@ -8,5 +8,8 @@ namespace PacketTracker
 {
     public interface IPackageState
     {
+        public string StatusName { get; }
+        bool TryNextState(StateController controller, out string message);
+        bool TryMarkedDelayed(Package package, out string message);
     }
 }
