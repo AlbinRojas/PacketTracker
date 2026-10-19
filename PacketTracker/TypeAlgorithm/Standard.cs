@@ -11,15 +11,14 @@ namespace PacketTracker
     {
         public decimal CalculatePrice(Weight weight, Distance distance)
         {
-          decimal basePrice = 50.0m
-          return basePrice + (decimal)(weight.Value * 5.0) + (decimal)(distance.Value * 1.0);
+            decimal basePrice = 50.0m;
+            return basePrice + (decimal)(weight.WeightInKg * 5) + (decimal)(distance.DistanceInKm * 1);
 
         }
-
+        //fix 4
         public DateTime CalculateEstimateDelivery(Distance distance)
         {
-            // Standard delivery is slower, so we assume it takes 1 day for every 100 km
-            int days = (int)Math.Ceiling(distance.Value / 300.0) + 2;
+            int days = (int)Math.Ceiling(distance.DistanceInKm / 300) + 2;
             return DateTime.Now.AddDays(days);
         }
 
