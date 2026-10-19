@@ -13,7 +13,7 @@ namespace PacketTracker
         public decimal PackageDistance { get; private set; }
         public string SenderAddress { get; private set; }
         public string ReciverAddress { get; private set; }
-
+        public string CurrentLocation { get; private set; }
         public StateController Status { get; private set; }
 
         // Skapar ett nytt paket med all nödvändig information och kopplar det till StateController.
@@ -24,6 +24,7 @@ namespace PacketTracker
             PackageDistance = packageDistance;
             SenderAddress = senderAddress;
             ReciverAddress = reciverAddress;
+            CurrentLocation = CurrentLocation;
 
             Status = status;
         }

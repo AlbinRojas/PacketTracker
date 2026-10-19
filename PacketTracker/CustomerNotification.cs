@@ -16,9 +16,16 @@ namespace PacketTracker
             _customerEmail = customerEmail;
         }
 
-        public void StatusChangedNotification(string packageID, string newStatus, string currentStation)
+        public void Update(Package package, string message)
         {
-            Console.WriteLine($"E-post till {_customerEmail}:\n Paket: {packageID} har ny status: {newStatus}. Den har nu nått {currentStation}.");
+            Console.WriteLine($"E-post till {_customerEmail}:\n Paket: {package.PackageID}\n Status: {package.Status}\n Den har nu nått {package.CurrentLocation}");
+
+            if (!string.IsNullOrWhiteSpace(message))
+            {
+                Console.WriteLine($"Meddelande: {message}");
+            }
+
+            Console.WriteLine();
         }
     }
 }
