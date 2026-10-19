@@ -16,7 +16,6 @@ namespace PacketTracker.SpeedAlgorithm
 
         public DateTime CalculateEstimateDelivery(Distance distance)
         {
-            // Express delivery is faster, so we assume it takes 1 day for every 500 km
             int days = distance.Value > 500 ? 2 : 1;
             return DateTime.Now.AddDays(days);
         }
