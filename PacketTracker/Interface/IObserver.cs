@@ -8,5 +8,6 @@ namespace PacketTracker.Interface
 {
     public interface IObserver
     {
+        public void Update(Package package, string message);
     }
 }
