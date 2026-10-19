@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PacketTracker.ShippingValues
 {
-    internal class Weight
+    public class Weight
     {
         public decimal WeightInKg { get; set; }
     }
