@@ -9,6 +9,7 @@ namespace PacketTracker
 {
     public interface IPackageType
     {
+        //fix 3
         decimal CalculatePrice(Weight weight, Distance distance);
         DateTime CalculateEstimateDelivery(Distance distance);
         string GetTypeName();

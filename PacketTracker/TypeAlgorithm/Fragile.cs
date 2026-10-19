@@ -16,7 +16,7 @@ namespace PacketTracker
 
             return basePrice + handlingFee + (decimal)(weight.WeightInKg * 12.0m) + (decimal)(distance.DistanceInKm * 2.5m);
         }
-        
+        //fix 2
         public DateTime CalculateEstimateDelivery(Distance distance)
         {
             

@@ -13,7 +13,7 @@ namespace PacketTracker.SpeedAlgorithm
         {
             return 100m + (weight.WeightInKg * 10m) + (distance.DistanceInKm * 2m);
         }
-
+        //fix1
         public DateTime CalculateEstimateDelivery(Distance distance)
         {
             int days = (int)Math.Ceiling(distance.DistanceInKm / 800) + 2;

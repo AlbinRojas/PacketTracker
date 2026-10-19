@@ -15,7 +15,7 @@ namespace PacketTracker
             return basePrice + (decimal)(weight.WeightInKg * 5) + (decimal)(distance.DistanceInKm * 1);
 
         }
-
+        //fix 4
         public DateTime CalculateEstimateDelivery(Distance distance)
         {
             int days = (int)Math.Ceiling(distance.DistanceInKm / 300) + 2;
