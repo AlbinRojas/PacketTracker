@@ -16,7 +16,7 @@ namespace PacketTracker
         public string CurrentLocation { get; private set; }
         public StateController Status { get; private set; }
 
-        // Skapar ett nytt paket med all nödvändig information och kopplar det till StateController.
+        // Skapar ett nytt paket med all nödvändig information och kopplar det till StateController.//
         public Package(int packageID, decimal packageWeight, decimal packageDistance, string senderAddress, string reciverAddress, StateController status)
         {
             PackageID = packageID;
