@@ -6,7 +6,17 @@ using System.Threading.Tasks;
 
 namespace PacketTracker
 {
-    internal class InTransitState
+    public class InTransitState: IPackageState
     {
+        bool TryNextState(StateController controller, out string message)
+        {
+
+            return true;
+        }
+        bool TryMarkedDelayed(Package package, out string message)
+        {
+
+            return true;
+        }
     }
 }

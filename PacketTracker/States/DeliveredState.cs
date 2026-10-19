@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PacketTracker
 {
-    internal class DeliveredState
+    public class DeliveredState
     {
     }
 }

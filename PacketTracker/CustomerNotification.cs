@@ -3,10 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PacketTracker.Interface;
 
 namespace PacketTracker
 {
-    internal class CustomerNotification
+    public class EmailCustomerNotification : IObserver
     {
+        private string _customerEmail;
+
+        public EmailCustomerNotification(string customerEmail)
+        {
+            _customerEmail = customerEmail;
+        }
+        //
+        public void Update(Package package, string message)
+        {
+            Console.WriteLine($"E-post till {_customerEmail}:\n Paket: {package.PackageID}\n Status: {package.Status}\n Den har nu nått {package.CurrentLocation}");
+
+            if (!string.IsNullOrWhiteSpace(message))
+            {
+                Console.WriteLine($"Meddelande: {message}");
+            }
+
+            Console.WriteLine();
+        }
     }
 }
