@@ -11,13 +11,12 @@ namespace PacketTracker.SpeedAlgorithm
     {
         public decimal CalculatePrice(Weight weight, Distance distance)
         {
-            return 100m + (weight.Value * 10m) + (distance.Value * 2m);
+            return 100m + (weight.WeightInKg * 10m) + (distance.DistanceInKm * 2m);
         }
-
+        //fix1
         public DateTime CalculateEstimateDelivery(Distance distance)
         {
-            // Express delivery is faster, so we assume it takes 1 day for every 500 km
-            int days = distance.Value > 500 ? 2 : 1;
+            int days = (int)Math.Ceiling(distance.DistanceInKm / 800) + 2;
             return DateTime.Now.AddDays(days);
         }
 
