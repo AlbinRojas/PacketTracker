@@ -25,7 +25,7 @@ namespace PacketTracker
         public StateController Status { get; private set; }
 
         // Skapar ett nytt paket med all nödvändig information och kopplar det till StateController.
-        public Package(int packageID, decimal packageWeight, decimal packageDistance, string senderAddress, string reciverAddress, StateController status)
+        public Package(int packageID, decimal packageWeight, decimal packageDistance, string senderAddress, string reciverAddress, StateController status, List<Station> route)
         {
             PackageID = packageID;
             PackageWeight = packageWeight;
@@ -50,7 +50,7 @@ namespace PacketTracker
             if (_route.Count > 0)
             {
                 CurrentStation = _route.Dequeue();
-                return true; ;
+                return true;
             }
 
             return false; // kön är tom, alltså är paketet färdiglevererat
