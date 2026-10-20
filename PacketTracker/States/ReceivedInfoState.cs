@@ -9,19 +9,19 @@ namespace PacketTracker
 {
     public class ReceivedInfoState : IPackageState
     {
-        public string StatusName => "Received Info";
+        public string StatusName => "Information mottagen";
         
-        public bool TryNextState(StateController controller, out string message) 
+        public bool TryNextState(Package package, out string message) 
         {
-            controller.SetState(new InTransitState());
+            package.SetState(new InTransitState());
 
-            message = "Package is now in the 'In Transit' state.";
+            message = "Paketet har lämnat terminalen.";
             return true;
         }
 
-        public bool TryMarkedDelayed(Package package, out string message) 
+        public bool TryMarkedDelayed(Package package, string reason, out string message) 
         {
-            message = "Package cannot be marked as delayed in the 'Received Info' state.";
+            message = "Paketet kan inte bli fösenat i detta stadium";
             return false;
         }
     }
