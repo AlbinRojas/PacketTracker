@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace PacketTracker
@@ -11,17 +10,16 @@ namespace PacketTracker
     {
         public string StatusName => "Received Info";
         
-        public bool TryNextState(StateController controller, out string message) 
+        public bool TryNextState(Package package, out string message) 
         {
-            controller.SetState(new InTransitState());
-
-            message = "Package is now in the 'In Transit' state.";
+            package.SetState(new InTransitState());
+            message = "Paketet har gått vidare till 'Under Transport'.";
             return true;
         }
 
-        public bool TryMarkedDelayed(Package package, out string message) 
+        public bool TryMarkedDelayed(Package package, string reason, out string message) 
         {
-            message = "Package cannot be marked as delayed in the 'Received Info' state.";
+            message = "Paketet kan inte markeras som försenat i läget 'Received Info'.";
             return false;
         }
     }
