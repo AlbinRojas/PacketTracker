@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PacketTracker.ShippingValues;
 
 namespace PacketTracker
 {
@@ -14,6 +15,13 @@ namespace PacketTracker
         public string SenderAddress { get; private set; }
         public string ReciverAddress { get; private set; }
 
+        // Visar vilken station paketet är på just nu
+        public Station CurrentStation { get; private set; }
+
+        // HÄR LIGGER KÖN! (Paketets resplan)
+        private Queue<Station> _route;
+
+        // Omvandlar listan med stationer till en kö för detta paket
         public StateController Status { get; private set; }
 
         // Skapar ett nytt paket med all nödvändig information och kopplar det till StateController.
@@ -25,6 +33,8 @@ namespace PacketTracker
             SenderAddress = senderAddress;
             ReciverAddress = reciverAddress;
 
+            _route = new Queue<Station>(route);
+
             // Här skapas StateController automatiskt med ReceivedInfoState som startläge
             Status = new StateController(new ReceivedInfoState());
         }
@@ -32,6 +42,18 @@ namespace PacketTracker
         public void SetState(IPackageState newState)
         {
             Status.SetState(newState);
+        }
+
+        // Metod för att flytta paketet till nästa station i kön
+        public bool MoveToNextStation()
+        {
+            if (_route.Count > 0)
+            {
+                CurrentStation = _route.Dequeue();
+                return true; ;
+            }
+
+            return false; // kön är tom, alltså är paketet färdiglevererat
         }
     }
 }
