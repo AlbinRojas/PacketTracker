@@ -31,19 +31,21 @@ namespace PacketTracker
             _stateObjects.Add(newState);
         }
 
-        // flyttar automatiskt till nästa state i flödet
-        public void ProceedToNextState() 
+        // flyttar paketet till nästa state i flödet
+        public void ProceedToNextState(Package package) 
         {
-            // Hämtar nästa state baserat på nuvarande state
-            IPackageState nextState = CurrentState.GetNextState();
+            // Låter nuvarande status försöka gå vidare, och sparar meddelandet
+            bool success = CurrentState.TryNextState(package, out string message);
 
-            // Utför bytet endast om det finns ett nästa state
-            if (nextState != null)
+            // Om bytet gick bra
+            if (success) 
             {
-                // Sätter det nya state som aktivt
-                CurrentState = nextState;
-                // Loggar statusändring och aktuell tid i historiken
-                _statusHistory.Add($"{DateTime.Now:HH:mm:ss} - {nextState.StatusName}");
+                Console.WriteLine($"Uppdatering: {message}");
+            }
+            // Om bytet inte gick
+            else 
+            {
+                Console.WriteLine($"Information: {message}");
             }
         }
 
