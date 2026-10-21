@@ -18,7 +18,7 @@ namespace PacketTracker
         //
         public void Update(Package package, string message)
         {
-            Console.WriteLine($"E-post till {_customerEmail}:\n Paket: {package.PackageID}\n Status: {package.Status}\n Den har nu nått {package.CurrentLocation}");
+            Console.WriteLine($"E-post till {_customerEmail}:\n Paket: {package.PackageID}\n Status: {package.Status}\n Den har nu nått {package.CurrentStation}");
 
             if (!string.IsNullOrWhiteSpace(message))
             {
