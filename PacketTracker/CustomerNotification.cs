@@ -15,10 +15,10 @@ namespace PacketTracker
         {
             _customerEmail = customerEmail;
         }
-        //
+        
         public void Update(Package package, string message)
         {
-            Console.WriteLine($"E-post till {_customerEmail}:\n Paket: {package.PackageID}\n Status: {package.Status}\n Den har nu nått {package.CurrentStation}");
+            Console.WriteLine($"E-post till {_customerEmail}:\n Paket: {package.PackageID}\n Status: {package.Status.CurrentState.StatusName}\n Station: {package.CurrentStation?.StationName}");
 
             if (!string.IsNullOrWhiteSpace(message))
             {
