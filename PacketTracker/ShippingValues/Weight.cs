@@ -9,5 +9,10 @@ namespace PacketTracker.ShippingValues
     public class Weight
     {
         public decimal WeightInKg { get; set; }
+
+        public Weight(decimal weightInKg) 
+        {
+            WeightInKg = weightInKg;
+        }
     }
 }

@@ -9,5 +9,10 @@ namespace PacketTracker.ShippingValues
     public class Station
     {
         public string StationName { get; set; }
+
+        public Station(string stationName) 
+        {
+            StationName = stationName;
+        }
     }
 }
