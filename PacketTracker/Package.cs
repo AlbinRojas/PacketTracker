@@ -32,7 +32,7 @@ namespace PacketTracker
             PackageDistance = packageDistance;
             SenderAddress = senderAddress;
             ReciverAddress = reciverAddress;
-
+            
             _route = new Queue<Station>(route);
 
             // Här skapas StateController automatiskt med ReceivedInfoState som startläge
