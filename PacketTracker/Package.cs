@@ -9,11 +9,14 @@ namespace PacketTracker
 {
     public class Package
     {
+ 
         public int PackageID { get; private set; }
         public decimal PackageWeight { get; private set; }
         public decimal PackageDistance { get; private set; }
         public string SenderAddress { get; private set; }
         public string ReciverAddress { get; private set; }
+        public IPackageType PackageType { get; private set; }
+        public DateTime EstimatedDeliveryDate { get; private set; }
 
         // Visar vilken station paketet är på just nu
         public Station CurrentStation { get; private set; }
@@ -25,13 +28,16 @@ namespace PacketTracker
         public StateController Status { get; private set; }
 
         // Skapar ett nytt paket med all nödvändig information och kopplar det till StateController.
-        public Package(int packageID, decimal packageWeight, decimal packageDistance, string senderAddress, string reciverAddress, StateController status, List<Station> route)
+        public Package(int packageID, decimal packageWeight, decimal packageDistance, string senderAddress, string reciverAddress, IPackageType packageType, StateController status, List<Station> route)
         {
             PackageID = packageID;
             PackageWeight = packageWeight;
             PackageDistance = packageDistance;
             SenderAddress = senderAddress;
             ReciverAddress = reciverAddress;
+
+            PackageType = packageType;
+            EstimatedDeliveryDate = packageType.CalculateEstimateDelivery(new Distance((decimal)packageDistance));
 
             _route = new Queue<Station>(route);
 

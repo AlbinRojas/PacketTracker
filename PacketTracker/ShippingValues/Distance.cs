@@ -9,5 +9,10 @@ namespace PacketTracker.ShippingValues
     public class Distance
     {
         public decimal DistanceInKm { get; set; } 
+
+        public Distance(decimal distanceInKm)
+        {
+            DistanceInKm = distanceInKm;
+        }
     }
 }
