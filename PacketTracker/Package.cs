@@ -32,7 +32,7 @@ namespace PacketTracker
         private readonly List<IPackageObserver> _observers = new List<IPackageObserver>();
 
         // Skapar ett nytt paket med all nödvändig information och kopplar det till StateController.
-        public Package(int packageID, decimal packageWeight, decimal packageDistance, string senderAddress, string reciverAddress, IPackageType packageType, StateController status, List<Station> route)
+        public Package(int packageID, decimal packageWeight, decimal packageDistance, string senderAddress, string reciverAddress, IPackageType packageType, List<Station> route)
         {
             PackageID = packageID;
             PackageWeight = packageWeight;
@@ -53,6 +53,10 @@ namespace PacketTracker
         {
             _observers.Add(observer);
         }
+        public void RemoveObserver (IPackageObserver observer)
+        {
+            _observers.Remove(observer);
+        }
 
         public void NotifyObservers(string message)
         {
@@ -65,7 +69,7 @@ namespace PacketTracker
         public void SetState(IPackageState newState)
         {
             Status.SetState(newState);
-            NotifyObservers($"Status har ändrats.");
+            // tog bort hårdkod
         }
 
         // Metod för att flytta paketet till nästa station i kön
@@ -74,7 +78,7 @@ namespace PacketTracker
             if (_route.Count > 0)
             {
                 CurrentStation = _route.Dequeue();
-                NotifyObservers($"Paketet har änlänt till en ny station.");
+                // Tog bort hårdkod
                 return true;
             }
 

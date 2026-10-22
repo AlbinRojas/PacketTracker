@@ -41,6 +41,7 @@ namespace PacketTracker
             if (success) 
             {
                 Console.WriteLine($"Uppdatering: {message}");
+                NotifyObservers($"Paketet har änlänt till en ny station.");
             }
             // Om bytet inte gick
             else 
