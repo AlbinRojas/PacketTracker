@@ -7,7 +7,7 @@ using PacketTracker.Interface;
 
 namespace PacketTracker
 {
-    public class EmailCustomerNotification : IObserver
+    public class EmailCustomerNotification : IPackageObserver
     {
         private string _customerEmail;
 

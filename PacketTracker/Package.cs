@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PacketTracker.ShippingValues;
+using PacketTracker.Interface;  
 
 namespace PacketTracker
 {
@@ -26,6 +27,8 @@ namespace PacketTracker
 
         // Omvandlar listan med stationer till en kö för detta paket
         public StateController Status { get; private set; }
+        
+        private readonly List<IPackageObserver> _observers = new List<IPackageObserver>();
 
         // Skapar ett nytt paket med all nödvändig information och kopplar det till StateController.
         public Package(int packageID, decimal packageWeight, decimal packageDistance, string senderAddress, string reciverAddress, IPackageType packageType, StateController status, List<Station> route)
@@ -44,10 +47,24 @@ namespace PacketTracker
             // Här skapas StateController automatiskt med ReceivedInfoState som startläge
             Status = new StateController(new ReceivedInfoState());
         }
+
+        public void AddObserver(IPackageObserver observer)
+        {
+            _observers.Add(observer);
+        }
+
+        public void NotifyObservers(string message)
+        {
+            foreach (var observer in _observers)
+            {
+                observer.Update(this, message);
+            }
+        }
         // Metod för att byta state på paketet
         public void SetState(IPackageState newState)
         {
             Status.SetState(newState);
+            NotifyObservers($"Status har ändrats.");
         }
 
         // Metod för att flytta paketet till nästa station i kön
@@ -56,6 +73,7 @@ namespace PacketTracker
             if (_route.Count > 0)
             {
                 CurrentStation = _route.Dequeue();
+                NotifyObservers($"Paketet har änlänt till en ny station.");
                 return true;
             }
 
