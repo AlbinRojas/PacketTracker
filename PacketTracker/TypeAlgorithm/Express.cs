@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PacketTracker.SpeedAlgorithm
+namespace PacketTracker.TypeAlgorithm
 {
     public class Express:IPackageType
     {
