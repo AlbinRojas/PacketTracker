@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PacketTracker.Interface
 {
-    public interface IObserver
+    public interface IPackageObserver
     {
         void Update(Package package, string message);
     }
