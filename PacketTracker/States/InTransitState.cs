@@ -12,17 +12,23 @@ namespace PacketTracker
         public string StatusName => "Under Transport";
         public bool TryNextState(Package package, out string message)
         {
+            
             if (package.MoveToNextStation())
             {
-                message = $"Packetet har anlänt till station: {package.CurrentStation}";
+                message = $"Packetet har anlänt till station: {package.CurrentStation.StationName}";
+                return true;
             }
-            package.SetState(new OutForDeliveryState());
-            message = "Packetet är ute för leverans.";
-            return true;
+            else 
+            {
+                package.SetState(new OutForDeliveryState());
+                message = "Packetet är ute för leverans.";
+                return true;
+            }
+
         }
         public bool TryMarkedDelayed(Package package, string reason, out string message)
         {
-            package.SetState(new DelayedState());
+            package.SetState(new DelayedState(reason));
             message = $"Försenad under transport: {reason}";
             return true;
         }
