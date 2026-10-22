@@ -10,5 +10,11 @@ namespace PacketTracker.ShippingValues
     {
         public string AddressName { get; set; }
         public string City { get; set; }
+
+        public Address(string addressName, string city) 
+        {
+            AddressName = addressName;
+            City = city;
+        }
     }
 }
