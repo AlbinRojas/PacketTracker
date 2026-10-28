@@ -8,16 +8,16 @@ namespace PacketTracker
 {
     public class DeliveredState : IPackageState
     {
-        public String StatusName => "Levererat";
+        public string StatusName => "Levererat"; // String ändrat till string
         public bool TryNextState(Package package, out string message)
         {
-            message = "Packetet har blivit levererat.";
+            message = "Packetet har redan leverarat och kan inte gå vidare.";
             return false;
         }
 
         public bool TryMarkedDelayed(Package package, string reason, out string message)
         {
-            message = "Packetet är levererat och kan inte bli försenat";
+            message = "Paketet är levererat och kan inte bli försenat";
             return false;
         }
     }

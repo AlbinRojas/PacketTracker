@@ -8,27 +8,29 @@ namespace PacketTracker
 {
     public class DelayedState : IPackageState
     {
-        public string StatusName => "Försenat";
-        private string _reason;
+        private readonly string _reason;   // readonly
+
+        // anledningen visas nu i statusen (tidigare sparades den men användes aldrig)
+        public string StatusName => $"Försenat ({_reason})";
 
         public DelayedState(string reason = "Okänd anledning")
         {
-            _reason = reason;
+            _reason = string.IsNullOrWhiteSpace(reason) ? "Okänd anledning" : reason;
         }
 
         public bool TryNextState(Package package, out string message)
         {
-            //Gör så att paketet återgår till sitt tidigare state innan det blev försenat.
-            IPackageState previusState = package.Status.GetPreviousState();
-            package.SetState(previusState);
+            // Paketet återgår till det state det hade innan förseningen
+            IPackageState previousState = package.Status.GetPreviousState();
+            package.SetState(previousState);
 
-            message = $"Förseningen är löst. Paketet är åter i rörelse.";
+            message = "Förseningen är löst. Paketet är åter i rörelse.";
             return true;
         }
 
         public bool TryMarkedDelayed(Package package, string reason, out string message)
         {
-            // Paketet är redan i försenat state, så vi kan inte markera det som försenat igen.
+            // Paketet är redan försenat och kan inte markeras igen
             message = "Paketet är redan markerat som försenat.";
             return false;
         }

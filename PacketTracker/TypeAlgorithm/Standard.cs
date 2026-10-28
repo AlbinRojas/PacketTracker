@@ -7,19 +7,23 @@ using System.Threading.Tasks;
 
 namespace PacketTracker
 {
-    public class Standard:IPackageType
+    public class Standard : IPackageType
     {
+        // lägst prioritet
+        public int Priority => 3;
+
         public decimal CalculatePrice(Weight weight, Distance distance)
         {
             decimal basePrice = 50.0m;
-            return basePrice + (decimal)(weight.WeightInKg * 5) + (decimal)(distance.DistanceInKm * 1);
-
+            // tog bort onödiga (decimal)-casts
+            return basePrice + (weight.WeightInKg * 5m) + (distance.DistanceInKm * 1m);
         }
-        //fix 4
-        public DateTime CalculateEstimateDelivery(Distance distance)
+
+        // tar emot sendDate i stället för DateTime.Now
+        public DateTime CalculateEstimateDelivery(Distance distance, DateTime sendDate)
         {
-            int days = (int)Math.Ceiling(distance.DistanceInKm / 300) + 2;
-            return DateTime.Now.AddDays(days);
+            int days = (int)Math.Ceiling(distance.DistanceInKm / 300m) + 2;
+            return sendDate.AddDays(days);
         }
 
         public string GetTypeName()

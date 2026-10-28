@@ -13,12 +13,18 @@ namespace PacketTracker
         public IPackageState CurrentState { get; private set; }
 
         // Behåller textloggen för utskrifter
-        public readonly List<string> _statusHistory = new();
+        private readonly List<string> _statusHistory = new();
+
+        public IReadOnlyList<string> StatusHistory => _statusHistory;
         // Lista som sparar själva objekten
         private readonly List<IPackageState> _stateObjects = new();
 
+        public bool IsDelivered => CurrentState is DeliveredState;
+
         public StateController(IPackageState initialState)
         {
+            ArgumentNullException.ThrowIfNull(initialState);
+
             CurrentState = initialState;
             _statusHistory.Add($"{DateTime.Now:HH:mm:ss} - {initialState.StatusName}");
             _stateObjects.Add(initialState);
@@ -26,28 +32,48 @@ namespace PacketTracker
 
         public void SetState(IPackageState newState)
         {
+            ArgumentNullException.ThrowIfNull(newState);
+
             CurrentState = newState;
             _statusHistory.Add($"{DateTime.Now:HH:mm:ss} - {newState.StatusName}");
             _stateObjects.Add(newState);
         }
 
         // flyttar paketet till nästa state i flödet
-        public void ProceedToNextState(Package package) 
+        public bool ProceedToNextState(Package package, out string message) 
         {
-            // Låter nuvarande status försöka gå vidare, och sparar meddelandet
-            bool success = CurrentState.TryNextState(package, out string message);
+            ArgumentNullException.ThrowIfNull(package);
 
-            // Om bytet gick bra
-            if (success) 
+            // Låter nuvarande status försöka gå vidare, och sparar meddelandet
+            bool success = CurrentState.TryNextState(package, out message);
+
+            // Om det lyckas, notifiera observatörerna
+            if (success)
             {
-                Console.WriteLine($"Uppdatering: {message}");
-                NotifyObservers($"Paketet har änlänt till en ny station.");
+                package.NotifyObservers(message);
             }
-            // Om bytet inte gick
-            else 
+
+            return success;
+        }
+
+        // Markera paketet som försenat med en anledning
+        public bool MarkAsDelayed(Package package, string reason, out string message)
+        {
+            ArgumentNullException.ThrowIfNull(package);
+
+            if (string.IsNullOrWhiteSpace(reason))
             {
-                Console.WriteLine($"Information: {message}");
+                reason = "Okänd anledning";
             }
+
+            bool success = CurrentState.TryMarkedDelayed(package, reason, out message);
+
+            if (success)
+            {
+                package.NotifyObservers(message);
+            }
+
+            return success;
         }
 
         // Hämtar den föra state från paketets historik
@@ -62,15 +88,5 @@ namespace PacketTracker
             // Om inget tidigare state finns, returnerar vi nuvarande state
             return CurrentState;
         }
-
-        public void MarkAsDelayed(string reason) 
-        {
-            // Skapar ett nytt delayedstate och skickar med anledningen
-            IPackageState delayedState = new DelayedState(reason);
-            // Sätter det nya delayedstate som aktivt
-            SetState(delayedState);
-        }
-
-
     }
 }

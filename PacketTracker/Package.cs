@@ -12,48 +12,75 @@ namespace PacketTracker
     public class Package
     {
  
-        public int PackageID { get; private set; }
-        public decimal PackageWeight { get; private set; }
-        public decimal PackageDistance { get; private set; }
-        public string SenderAddress { get; private set; }
-        public string ReciverAddress { get; private set; }
-        public IPackageType PackageType { get; private set; }
-        public DateTime EstimatedDeliveryDate { get; private set; }
+        public int PackageID { get; }
+        public Weight Weight { get; }
+        public Distance Distance { get; }
+        public Address SenderAddress { get; }
+        public Address ReceiverAddress { get; }
+        public IPackageType PackageType { get; }
+        public DateTime SendDate { get; } 
+        public DateTime EstimatedDeliveryDate { get; }
+
+        public decimal Price => PackageType.CalculatePrice(Weight, Distance);
 
         // Visar vilken station paketet är på just nu
-        public Station CurrentStation { get; private set; }
+        public Station? CurrentStation { get; private set; }
+
+        public int RemainingStations => _route.Count;
 
         // HÄR LIGGER KÖN! (Paketets resplan)
-        private Queue<Station> _route;
+        private readonly Queue<Station> _route;
 
         // Omvandlar listan med stationer till en kö för detta paket
-        public StateController Status { get; private set; }
+        public StateController Status { get; }
         
         private readonly List<IPackageObserver> _observers = new List<IPackageObserver>();
 
         // Skapar ett nytt paket med all nödvändig information och kopplar det till StateController.
-        public Package(int packageID, decimal packageWeight, decimal packageDistance, string senderAddress, string reciverAddress, IPackageType packageType, List<Station> route)
+        public Package(int packageID, Weight weight, Distance distance, Address senderAddress,
+                       Address receiverAddress, IPackageType packageType, List<Station> route, DateTime sendDate)
         {
-            PackageID = packageID;
-            PackageWeight = packageWeight;
-            PackageDistance = packageDistance;
-            SenderAddress = senderAddress;
-            ReciverAddress = reciverAddress;
+           
+            if (packageID <= 0)
+            {
+                throw new ArgumentException("Paket-ID måste vara större än 0.", nameof(packageID));
+            }
+            ArgumentNullException.ThrowIfNull(weight);
+            ArgumentNullException.ThrowIfNull(distance);
+            ArgumentNullException.ThrowIfNull(senderAddress);
+            ArgumentNullException.ThrowIfNull(receiverAddress);
+            ArgumentNullException.ThrowIfNull(packageType);
+            ArgumentNullException.ThrowIfNull(route);
 
+            PackageID = packageID;
+            Weight = weight;
+            Distance = distance;
+            SenderAddress = senderAddress;
+            ReceiverAddress = receiverAddress;
             PackageType = packageType;
-            EstimatedDeliveryDate = packageType.CalculateEstimateDelivery(new Distance((decimal)packageDistance));
+            SendDate = sendDate;
+
+            // skickar med sendDate 
+            EstimatedDeliveryDate = packageType.CalculateEstimateDelivery(distance, sendDate);
 
             _route = new Queue<Station>(route);
 
-            // Här skapas StateController automatiskt med ReceivedInfoState som startläge
+            // StateController skapas med ReceivedInfoState som startläge
             Status = new StateController(new ReceivedInfoState());
         }
 
         public void AddObserver(IPackageObserver observer)
         {
-            _observers.Add(observer);
+            ArgumentNullException.ThrowIfNull(observer);
+
+            // undvik att samma observatör läggs till två gånger
+            if (!_observers.Contains(observer))
+            {
+                _observers.Add(observer);
+            }
         }
-        public void RemoveObserver (IPackageObserver observer)
+
+        public void RemoveObserver(IPackageObserver observer)
         {
             _observers.Remove(observer);
         }
@@ -65,24 +92,23 @@ namespace PacketTracker
                 observer.Update(this, message);
             }
         }
-        // Metod för att byta state på paketet
+
+        // Byter state på paketet (anropas av state-klasserna)
         public void SetState(IPackageState newState)
         {
             Status.SetState(newState);
-            // tog bort hårdkod
         }
 
-        // Metod för att flytta paketet till nästa station i kön
+        // Flyttar paketet till nästa station i kön
         public bool MoveToNextStation()
         {
             if (_route.Count > 0)
             {
                 CurrentStation = _route.Dequeue();
-                // Tog bort hårdkod
                 return true;
             }
 
-            return false; // kön är tom, alltså är paketet färdiglevererat
+            return false; // kön är tom, paketet har passerat alla stationer
         }
     }
 }
