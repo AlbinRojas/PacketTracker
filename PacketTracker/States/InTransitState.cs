@@ -9,27 +9,26 @@ namespace PacketTracker
 {
     public class InTransitState : IPackageState
     {
-        public string StatusName => "Under Transport";
+        public string StatusName => "Under transport";
+
         public bool TryNextState(Package package, out string message)
         {
-            
             if (package.MoveToNextStation())
             {
-                message = $"Packetet har anlänt till station: {package.CurrentStation.StationName}";
-                return true;
-            }
-            else 
-            {
-                package.SetState(new OutForDeliveryState());
-                message = "Packetet är ute för leverans.";
+                
+                message = $"Paketet har anlänt till station: {package.CurrentStation?.StationName}";
                 return true;
             }
 
+            package.SetState(new OutForDeliveryState());
+            message = "Paketet är ute för leverans.";   
+            return true;
         }
+
         public bool TryMarkedDelayed(Package package, string reason, out string message)
         {
             package.SetState(new DelayedState(reason));
-            message = $"Försenad under transport: {reason}";
+            message = $"Försenat under transport: {reason}";
             return true;
         }
     }

@@ -8,11 +8,21 @@ namespace PacketTracker.ShippingValues
 {
     public class Station
     {
-        public string StationName { get; set; }
+        public string StationName { get; }   // tog bort "set"
 
-        public Station(string stationName) 
+        public Station(string stationName)
         {
-            StationName = stationName;
+            // en station måste ha ett namn
+            if (string.IsNullOrWhiteSpace(stationName))
+            {
+                throw new ArgumentException("Stationsnamnet får inte vara tomt.", nameof(stationName));
+            }
+
+            StationName = stationName.Trim();
         }
+
+        // Snygg utskrift
+        public override string ToString() => StationName;
     }
 }
+
