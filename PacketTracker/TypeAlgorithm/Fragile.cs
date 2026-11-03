@@ -17,7 +17,6 @@ namespace PacketTracker
             decimal basePrice = 150.0m;
             decimal handlingFee = 75.0m;
 
-            // tog bort onödiga (decimal)-casts
             return basePrice + handlingFee + (weight.WeightInKg * 12.0m) + (distance.DistanceInKm * 2.5m);
         }
 

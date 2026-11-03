@@ -20,7 +20,7 @@ namespace PacketTracker.TypeAlgorithm
         //  tar emot sendDate i stället för DateTime.Now
         public DateTime CalculateEstimateDelivery(Distance distance, DateTime sendDate)
         {
-            int days = (int)Math.Ceiling(distance.DistanceInKm / 800m) + 2;
+            int days = (int)Math.Ceiling(distance.DistanceInKm / 800m) + 1;
             return sendDate.AddDays(days);
         }
 

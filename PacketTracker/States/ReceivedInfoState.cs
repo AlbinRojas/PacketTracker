@@ -21,7 +21,7 @@ namespace PacketTracker
 
         public bool TryMarkedDelayed(Package package, string reason, out string message) 
         {
-            message = "Paketet kan inte bli fösenat i detta stadium";
+            message = "Paketet kan inte bli försenat i detta stadium";
             return false;
         }
     }

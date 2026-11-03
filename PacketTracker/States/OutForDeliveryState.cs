@@ -20,7 +20,7 @@ namespace PacketTracker.States
         public bool TryMarkedDelayed(Package package, string reason, out string message)
         {
             package.SetState(new DelayedState(reason));
-            message = $"Försenad under leverans: {reason}";
+            message = $"Försenat under leverans: {reason}";
             return true;
         }
     }

@@ -9,8 +9,8 @@ namespace PacketTracker.ShippingValues
     // Används nu av Package (avsändare och mottagare) i stället för vanliga strängar.
     public class Address
     {
-        public string AddressName { get; }   //  tog bort "set"
-        public string City { get; }          //  tog bort "set"
+        public string AddressName { get; }
+        public string City { get; }         
 
         public Address(string addressName, string city)
         {
