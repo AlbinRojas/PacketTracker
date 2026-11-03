@@ -8,12 +8,12 @@ namespace PacketTracker
 {
     public class DelayedState : IPackageState
     {
-        private readonly string _reason;   // readonly
+        private readonly string _reason;  
 
-        // anledningen visas nu i statusen (tidigare sparades den men användes aldrig)
+        // anledningen visas nu i statusen
         public string StatusName => $"Försenat ({_reason})";
 
-        public DelayedState(string reason = "Okänd anledning")
+        public DelayedState(string reason)
         {
             _reason = string.IsNullOrWhiteSpace(reason) ? "Okänd anledning" : reason;
         }
