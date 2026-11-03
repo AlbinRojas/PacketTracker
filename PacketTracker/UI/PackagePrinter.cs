@@ -45,12 +45,35 @@ namespace PacketTracker.UI
             Console.WriteLine($"Nuvarande station: {package.CurrentStation?.StationName ?? "Ej avgått"}");
             Console.WriteLine($"Stationer kvar:    {package.RemainingStations}");
             PrintHistory(package);
+            PrintNotifications(package);
         }
 
         private static void PrintHistory(Package package)
         {
             Console.WriteLine("Statushistorik:");
             foreach (string entry in package.Status.StatusHistory)
+            {
+                Console.WriteLine($"  {entry}");
+            }
+        }
+
+        private static void PrintNotifications(Package package)
+        {
+            Console.WriteLine("Skickade notiser:");
+            
+            if (package.ObserverCount == 0)
+            {
+                Console.WriteLine(" Inga notiser är aktiverade för detta paketet.");
+                return;
+            }
+
+            if (package.NotificationLog.Count == 0)
+            {
+                Console.WriteLine(" Notiser är aktiverade, men inget mail har skickats ännu.");
+                return;
+            }
+
+            foreach (string entry in package.NotificationLog)
             {
                 Console.WriteLine($"  {entry}");
             }

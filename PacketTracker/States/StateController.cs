@@ -14,6 +14,7 @@ namespace PacketTracker
 
         //Används bara för att simulera att det tar någon tid
         private DateTime _simulatedTime;
+        public string TimeStamp => $"{_simulatedTime:yyyy-MM-dd HH:mm:ss}";
 
         // Behåller textloggen för utskrifter
         private readonly List<string> _statusHistory = new();
