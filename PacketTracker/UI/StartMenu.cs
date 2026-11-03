@@ -43,7 +43,7 @@ namespace PacketTracker.UI
                 if (choice < 1 || choice > _menus.Count)
                 {
                     Console.WriteLine($"Ogiltigt val. Ange en siffra mellan 0 och {_menus.Count}.");
-                    ConsoleInput.WaitForKey();   // NY
+                    ConsoleInput.WaitForKey();
                     continue;
                 }
 

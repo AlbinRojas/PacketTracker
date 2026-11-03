@@ -15,7 +15,7 @@ namespace PacketTracker
         public decimal CalculatePrice(Weight weight, Distance distance)
         {
             decimal basePrice = 50.0m;
-            // tog bort onödiga (decimal)-casts
+
             return basePrice + (weight.WeightInKg * 5m) + (distance.DistanceInKm * 1m);
         }
 

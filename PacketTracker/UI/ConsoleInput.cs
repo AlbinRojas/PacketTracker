@@ -70,7 +70,7 @@ namespace PacketTracker.UI
             }
         }
 
-        // Ersätter ReadPositiveDecimal. Läser ett tal och frågar igen direkt
+       
         // om det är ogiltigt eller utanför tillåtet intervall.
         public static decimal ReadDecimalInRange(string prompt, decimal min, decimal max, string unit)
         {
