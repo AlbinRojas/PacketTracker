@@ -105,6 +105,7 @@ namespace PacketTracker
             if (_route.Count > 0)
             {
                 CurrentStation = _route.Dequeue();
+                Status.AddHistoryStation($"Paketet har anlänt till station: {CurrentStation.StationName}");
                 return true;
             }
 

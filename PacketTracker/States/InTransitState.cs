@@ -15,6 +15,7 @@ namespace PacketTracker
             if (package.MoveToNextStation())
             {
                 message = $"Packetet har anlänt till station: {package.CurrentStation}";
+                return true;
             }
             package.SetState(new OutForDeliveryState());
             message = "Packetet är ute för leverans.";

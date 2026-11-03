@@ -46,6 +46,14 @@ namespace PacketTracker
             _stateObjects.Add(newState);
         }
 
+        public void AddHistoryStation(string text)
+        {
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                _statusHistory.Add($"{_simulatedTime:yyyy-MM-dd} {DateTime.Now:HH:mm:ss} - {text}");
+            }
+        }
+
         // flyttar paketet till nästa state i flödet
         public bool ProceedToNextState(Package package, out string message) 
         {
