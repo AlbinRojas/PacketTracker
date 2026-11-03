@@ -12,6 +12,9 @@ namespace PacketTracker
     {
         public IPackageState CurrentState { get; private set; }
 
+        //Används bara för att simulera att det tar någon tid
+        private DateTime _simulatedTime;
+
         // Behåller textloggen för utskrifter
         private readonly List<string> _statusHistory = new();
 
@@ -25,8 +28,10 @@ namespace PacketTracker
         {
             ArgumentNullException.ThrowIfNull(initialState);
 
+            _simulatedTime = DateTime.Now;
+
             CurrentState = initialState;
-            _statusHistory.Add($"{DateTime.Now:HH:mm:ss} - {initialState.StatusName}");
+            _statusHistory.Add($"{_simulatedTime:yyyy-MM-dd} {DateTime.Now:HH:mm:ss} - {initialState.StatusName}");
             _stateObjects.Add(initialState);
         }
 
@@ -34,8 +39,10 @@ namespace PacketTracker
         {
             ArgumentNullException.ThrowIfNull(newState);
 
+            _simulatedTime = _simulatedTime.AddDays(1);
+
             CurrentState = newState;
-            _statusHistory.Add($"{DateTime.Now:HH:mm:ss} - {newState.StatusName}");
+            _statusHistory.Add($"{_simulatedTime:yyyy-MM-dd} {DateTime.Now:HH:mm:ss} - {newState.StatusName}");
             _stateObjects.Add(newState);
         }
 
