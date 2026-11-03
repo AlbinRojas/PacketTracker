@@ -54,7 +54,7 @@ namespace PacketTracker
 
             PackageID = packageID;
             Weight = weight;
-            Distance = distance;
+            Distance = distance;    
             SenderAddress = senderAddress;
             ReceiverAddress = receiverAddress;
             PackageType = packageType;
