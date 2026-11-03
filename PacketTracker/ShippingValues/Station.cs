@@ -8,7 +8,7 @@ namespace PacketTracker.ShippingValues
 {
     public class Station
     {
-        public string StationName { get; }   // tog bort "set"
+        public string StationName { get; }
 
         public Station(string stationName)
         {
@@ -25,4 +25,3 @@ namespace PacketTracker.ShippingValues
         public override string ToString() => StationName;
     }
 }
-

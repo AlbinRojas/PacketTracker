@@ -8,10 +8,10 @@ namespace PacketTracker
 {
     public class DeliveredState : IPackageState
     {
-        public string StatusName => "Levererat"; // String ändrat till string
+        public string StatusName => "Levererat";
         public bool TryNextState(Package package, out string message)
         {
-            message = "Packetet har redan leverarat och kan inte gå vidare.";
+            message = "Packetet har redan leverarats och kan inte gå vidare.";
             return false;
         }
 

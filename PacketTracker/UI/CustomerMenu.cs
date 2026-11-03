@@ -24,7 +24,7 @@ namespace PacketTracker.UI
         {
             while (true)
             {
-                ConsoleInput.ClearScreen();   // NY: ren skärm inför varje visning av menyn
+                ConsoleInput.ClearScreen();
                 Console.WriteLine("---------- Kund ----------");
                 Console.WriteLine(" 1. Spåra mitt paket");
                 Console.WriteLine(" 2. Få e-postnotiser för mitt paket");
