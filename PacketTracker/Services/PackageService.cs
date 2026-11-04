@@ -89,9 +89,18 @@ namespace PacketTracker.Services
                 return false;
             }
 
+            int before = package.ObserverCount;
             package.AddObserver(observer);
-            message = $"Notiser aktiverade för paket {packageId}.";
+            
+            if (package.ObserverCount == before)
+            {
+                message = $"Notiser är redan aktiverade för paket {packageId}.";
+                return false;
+            }
+
+            message = $"Notiser aktiverade för paket {packageId}.Ett mail skickas autmoatiskt vid varje ny station eller status";
             return true;
+
         }
 
         // Prisförfrågan för kunden. Räknar ut pris, prioritet och leveransdatum för varje frakttyp.

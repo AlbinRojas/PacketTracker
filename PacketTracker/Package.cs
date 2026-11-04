@@ -93,6 +93,18 @@ namespace PacketTracker
             }
         }
 
+        public int ObserverCount => _observers.Count;
+        private readonly List<string> _notificationLog = new();
+        public IReadOnlyList<string> NotificationLog => _notificationLog;
+
+        public void LogNotification(string message)
+        {
+            if (!string.IsNullOrWhiteSpace(message))
+            {
+                _notificationLog.Add(message);
+            }
+        }
+
         // Byter state på paketet (anropas av state-klasserna)
         public void SetState(IPackageState newState)
         {
